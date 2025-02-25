@@ -3,7 +3,7 @@
 This repository contains the code for a course evaluation microservice a Spanish learning program. 
 Microservice A is a course evaluation service that loads a list of previous student evaluations for each course level category. The evaluations are displayed as a scrollable pop-up tab on the corresponding course page.
 
-# How to Programmatically REQUEST Data from the Microservice
+# How to REQUEST Data from the Microservice
 
 To request evaluation data for a given course level, make an HTTP GET request to the following endpoint: GET http://localhost:3000/api/evaluations/:level
 Replace `:level` with one of the course levels: `beginner`, `intermediate`, or `advanced`.
@@ -26,7 +26,7 @@ fetch('http://localhost:3000/api/evaluations/beginner')
 4. Process Data: Use the received JSON data as needed by displaying it in a pop-up.
 5. Error Handling: Catch and log any errors that occur during the process.
 
-# How to Programmatically RECEIVE Data from the Microservice
+# How to RECEIVE Data from the Microservice
 When you make a GET request to the microservice endpoint, it responds with a JSON payload. The JSON data contains an array of evaluation objects. 
 For example, a response for the beginner level may look like this:
 

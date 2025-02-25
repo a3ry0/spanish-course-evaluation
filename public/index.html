@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spanish Course Evaluations</title>
+  <style>
+    /* Modal (pop-up) styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 60px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-height: 70%;
+      overflow-y: scroll;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover, .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Course Evaluations</h1>
+  <p>Select a course level:</p>
+  <select id="courseLevel">
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="advanced">Advanced</option>
+  </select>
+  <button id="showEvaluations">Show Evaluations</button>
+
+  <!-- Modal for displaying evaluations -->
+  <div id="evaluationModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Student Evaluations</h2>
+      <ul id="evaluationList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("evaluationModal");
+    const btn = document.getElementById("showEvaluations");
+    const closeBtn = document.getElementsByClassName("close")[0];
+    const evaluationList = document.getElementById("evaluationList");
+
+    // When the button is clicked, fetch evaluations and open modal
+    btn.addEventListener('click', () => {
+      const level = document.getElementById("courseLevel").value;
+      fetch('/api/evaluations/' + level)
+        .then(response => response.json())
+        .then(data => {
+          evaluationList.innerHTML = "";
+          data.forEach(evaluation => {
+            const li = document.createElement("li");
+            li.textContent = `${evaluation.student}: ${evaluation.evaluation}`;
+            evaluationList.appendChild(li);
+          });
+          modal.style.display = "block";
+        })
+        .catch(error => console.error('Error fetching evaluations:', error));
+    });
+
+    // Close modal when the close button is clicked
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = "none";
+    });
+
+    // Close modal when clicking outside modal content
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
